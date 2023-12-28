@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
 const userSchema = new Schema(
   {
     name: {
@@ -56,7 +57,7 @@ const userSchema = new Schema(
 //! this code is used  to encript the password before saving
 userSchema.pre("save", async function (next) {
   if (!this.isModified()) return next();
-  this.password = bcrypt.hash(this.password, 10);
+  this.password =  await bcrypt.hash(this.password, 10);
   next();
 });
 //! this code is used to check the password if ists correct or not
